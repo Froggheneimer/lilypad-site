@@ -1,0 +1,226 @@
+/* LilyPad site: system fonts only, nothing from other hosts. Colors from the app (src/constants/colors.ts). */
+:root {
+  --paper: #FFFFFF;
+  --ink: #1F2A24;
+  --muted: #5B6B62;
+  --green: #2F7D4F;
+  --green-deep: #1E5235;
+  --leaf: #E8F3EC;
+  --rule: #DCE6DF;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+  --serif: "Iowan Old Style", "Palatino Linotype", Charter, "Sitka Text", "Noto Serif", Georgia, serif;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+.page {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.25rem 1.25rem 4rem;
+}
+
+/* Header: the pad mark, the name, the other language */
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--sans);
+  font-size: 1rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--rule);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--green-deep);
+  font-weight: 700;
+  font-size: 1.15rem;
+  text-decoration: none;
+}
+.brand svg { width: 2rem; height: 2rem; flex: none; }
+.lang { color: var(--green); }
+
+a { color: var(--green); text-underline-offset: 0.18em; }
+a:hover { color: var(--green-deep); }
+a:focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Title block */
+h1, h2, h3 {
+  font-family: var(--sans);
+  color: var(--green-deep);
+  line-height: 1.2;
+}
+h1 {
+  font-size: clamp(1.75rem, 6vw, 2.4rem);
+  letter-spacing: -0.02em;
+  margin: 2.5rem 0 0.4rem;
+}
+.updated {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin: 0 0 2rem;
+}
+h2 {
+  font-size: 1.35rem;
+  margin: 2.75rem 0 0.6rem;
+  scroll-margin-top: 1rem;
+}
+h3 { font-size: 1.05rem; margin: 1.5rem 0 0.25rem; }
+p, ul, ol { margin: 0 0 1rem; }
+ul, ol { padding-left: 1.3rem; }
+li { margin-bottom: 0.35rem; }
+
+/* The pad: the short version, at the top of each page */
+.pad {
+  position: relative;
+  background: var(--leaf);
+  border-radius: 2rem 2rem 2rem 0.35rem;
+  padding: 1.5rem 1.5rem 1.25rem;
+  margin: 0 0 2.5rem;
+}
+.pad h2 { margin-top: 0; font-size: 1.15rem; }
+.pad ul { list-style: none; padding: 0; margin: 0; }
+.pad li {
+  position: relative;
+  padding-left: 1.6rem;
+  margin-bottom: 0.6rem;
+}
+.pad li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: var(--green);
+  /* a small pad: a circle with a wedge cut out */
+  clip-path: polygon(50% 50%, 62% 0, 100% 0, 100% 100%, 0 100%, 0 0, 38% 0);
+}
+
+/* Contents */
+.contents {
+  font-family: var(--sans);
+  font-size: 1rem;
+  columns: 2 14rem;
+  column-gap: 2rem;
+  padding: 0;
+  list-style: none;
+  margin: 0 0 1rem;
+}
+.contents li { break-inside: avoid; margin-bottom: 0.4rem; }
+
+/* Who receives data: a table on wide screens, stacked on phones */
+.services {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+  margin: 0.5rem 0 1.25rem;
+}
+.services th {
+  font-family: var(--sans);
+  text-align: left;
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 0 0.75rem 0.5rem 0;
+  border-bottom: 2px solid var(--rule);
+}
+.services td {
+  vertical-align: top;
+  padding: 0.75rem 0.75rem 0.75rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.services td:first-child {
+  font-family: var(--sans);
+  font-weight: 700;
+  color: var(--green-deep);
+  white-space: nowrap;
+}
+@media (max-width: 34rem) {
+  .services thead { display: none; }
+  .services, .services tbody, .services tr, .services td { display: block; }
+  .services tr { padding: 0.9rem 0; border-bottom: 1px solid var(--rule); }
+  .services td { border: 0; padding: 0.1rem 0; }
+  .services td[data-label]::before {
+    content: attr(data-label) ": ";
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+}
+
+/* Delete page: the app's buttons, drawn as in the app */
+.steps { padding-left: 0; list-style: none; counter-reset: step; }
+.steps li {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 2.25rem 1fr;
+  align-items: baseline;
+  margin-bottom: 1rem;
+}
+.steps li::before {
+  content: counter(step);
+  font-family: var(--sans);
+  font-weight: 700;
+  color: var(--green);
+  font-size: 1.15rem;
+}
+.tap {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--green-deep);
+  background: var(--leaf);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 0.1rem 0.75rem;
+  white-space: nowrap;
+}
+.tap.danger { color: #B3261E; background: #FBECEB; border-color: #F2C9C6; }
+
+.mail {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 1.1rem;
+  word-break: break-all;
+}
+
+.foot {
+  margin-top: 3.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+@media print {
+  .top .lang, .contents { display: none; }
+  body { font-size: 11pt; }
+}
+.foot p { display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem; margin: 0; }
+@media (max-width: 26rem) {
+  body { font-size: 1rem; }
+  .page { padding-left: 1rem; padding-right: 1rem; }
+  .pad { padding: 1.25rem 1.1rem 1rem; }
+}
